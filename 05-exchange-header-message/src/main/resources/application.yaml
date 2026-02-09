@@ -1,0 +1,47 @@
+# Spring Boot Basic Configuration
+spring:
+  application:
+    name: camel-course-starter
+
+# Apache Camel Configuration
+camel:
+  main:
+    # This is the EXACT property the Spring Boot Starter requires
+    run-controller: true
+    name: CamelCourseContext
+
+  # Note: Use 'route-controller', not nested under springboot
+  route-controller:
+    enabled: true
+    back-off-delay: 2000
+    back-off-max-attempts: 3
+
+  # Metrics and Tracing
+  metrics:
+    enabled: true
+  tracing:
+    enabled: false
+
+  # Component Specific Configuration (Correctly Nested)
+  component:
+    file:
+      delay: 5000
+    log:
+      exchange-formatter:
+        show-all: false
+        show-body: true
+        show-headers: true
+
+# Logging Levels
+logging:
+  level:
+    root: INFO
+    org.apache.camel: INFO
+    com.camel.course: DEBUG
+
+# Management Endpoints (Actuator)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info,camelroutes"

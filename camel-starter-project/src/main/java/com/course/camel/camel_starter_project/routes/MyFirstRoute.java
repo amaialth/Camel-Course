@@ -11,9 +11,9 @@ public class MyFirstRoute extends RouteBuilder {
                 .setBody(constant("Camel is running in Spring Boot!"))
                 .to("log:first-logger");
 
-        from("file:data/input?noop=true")
+        from("file:data/input?idempotentKey=${file:name}-${file:size}-${date:now:yyyyMMddHHmmss}")
                 .routeId("FileTransformationRoute") // Assigning an ID to the Route
-
+                .log("Processing file: ${header.CamelFileName}")
                 // 2. Processor: Custom logic to transform data
                 .process(exchange -> {
                     String body = exchange.getIn().getBody(String.class);
